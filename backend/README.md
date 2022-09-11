@@ -8,6 +8,7 @@ This project was builted using Java
 * [Spring Boot](https://spring.io/) 
 * [JUnit 5](https://junit.org/junit5/) 
 * [Swagger - Open API](https://swagger.io/) 
+* [Twilio](https://www.twilio.com/) 
 
 ## Execute the API
 
