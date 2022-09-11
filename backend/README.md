@@ -19,3 +19,12 @@ To execute the api, you must setup keys environment for this project runs withou
     TWILIO_PHONE_FROM
     TWILIO_PHONE_TO
 ```
+
+
+## API EndPoints Documentation
+
+To see the Swagger, check this link here.
+
+```bash
+    http://localhost:8080/swagger-ui/index.html
+```
