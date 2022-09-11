@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,42 +28,48 @@ public class SaleController {
 
     @Operation(summary = "Get All Sales")
     @GetMapping
-    public Page<Sale> getAllSales(@Parameter(description = "minimum date for search")
-                                  @RequestParam(value = "minDate", defaultValue = "") String minDate,
-                                  @Parameter(description = "max date for search") @RequestParam(value = "maxDate", defaultValue = "") String maxDate,
-                                  Pageable pageable) {
-        return this.service.getAll(minDate, maxDate, pageable);
+    public ResponseEntity<Page<Sale>> getAllSales(@Parameter(description = "minimum date for search")
+            @RequestParam(value = "minDate", defaultValue = "") String minDate,
+            @Parameter(description = "max date for search") @RequestParam(value = "maxDate",
+            defaultValue = "") String maxDate, Pageable pageable) {
+        Page<Sale> salesPage = this.service.getAll(minDate, maxDate, pageable);
+        return new ResponseEntity<>(salesPage, HttpStatus.OK);
     }
 
     @Operation(summary = "Get Sale By Id")
     @GetMapping("/{saleId}")
-    public SaleDTO findSaleById(@Parameter(description = "id of sale to be detailed") @PathVariable Long saleId) {
-        return this.service.getSaleById(saleId);
+    public ResponseEntity<SaleDTO> findSaleById(@Parameter(description = "id of sale to be detailed") @PathVariable Long saleId) {
+        SaleDTO saleDTO = this.service.getSaleById(saleId);
+        return new ResponseEntity<>(saleDTO, HttpStatus.OK);
     }
 
     @Operation(summary = "Create a new Sale By Id")
     @PostMapping
-    public SaleDTO createSale(@RequestBody SaleDTO saleDTO) {
-        return this.service.create(saleDTO);
+    public ResponseEntity<SaleDTO> createSale(@RequestBody SaleDTO saleDTO) {
+        saleDTO = this.service.create(saleDTO);
+        return new ResponseEntity<>(saleDTO, HttpStatus.OK);
     }
 
     @Operation(summary = "Update an Sale By Id")
     @PutMapping("/{saleId}")
-    public SaleDTO update(@Parameter(description = "id of sale to be updated") @PathVariable Long saleId,
+    public ResponseEntity<SaleDTO> update(@Parameter(description = "id of sale to be updated") @PathVariable Long saleId,
                           @RequestBody SaleDTO saleDTO) {
         saleDTO.setId(saleId);
-        return this.service.update(saleDTO);
+        saleDTO = this.service.update(saleDTO);
+        return new ResponseEntity<>(saleDTO, HttpStatus.OK);
     }
 
     @Operation(summary = "id of sale to be deleted")
     @DeleteMapping("/{saleId}")
-    public void update(@Parameter(description = "id of sale to be deleted") @PathVariable Long saleId) {
+    public ResponseEntity<Void> update(@Parameter(description = "id of sale to be deleted") @PathVariable Long saleId) {
         this.service.delete(saleId);
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "id of sale to be notified")
     @GetMapping("/{saleId}/notification")
-    public void notifySms(@Parameter(description = "id of sale to be notified") @PathVariable Long saleId) {
+    public ResponseEntity<Void> notifySms(@Parameter(description = "id of sale to be notified") @PathVariable Long saleId) {
         this.smsService.sendSms(saleId);
+        return ResponseEntity.ok().build();
     }
 }
