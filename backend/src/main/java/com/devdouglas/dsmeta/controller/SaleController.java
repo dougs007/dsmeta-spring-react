@@ -1,5 +1,6 @@
 package com.devdouglas.dsmeta.controller;
 
+import com.devdouglas.dsmeta.dto.SaleDTO;
 import com.devdouglas.dsmeta.entity.Sale;
 import com.devdouglas.dsmeta.service.SaleService;
 import com.devdouglas.dsmeta.service.SmsService;
@@ -29,8 +30,29 @@ public class SaleController {
         return this.service.getAll(minDate, maxDate, pageable);
     }
 
+    @GetMapping("/{saleId}")
+    public SaleDTO findSaleById(@PathVariable Long saleId) {
+        return this.service.getSaleById(saleId);
+    }
+
+    @PostMapping
+    public SaleDTO createSale(@RequestBody SaleDTO saleDTO) {
+        return this.service.create(saleDTO);
+    }
+
+    @PutMapping("/{saleId}")
+    public SaleDTO update(@PathVariable Long saleId, @RequestBody SaleDTO saleDTO) {
+        saleDTO.setId(saleId);
+        return this.service.update(saleDTO);
+    }
+
+    @DeleteMapping("/{saleId}")
+    public void update(@PathVariable Long saleId) {
+        this.service.delete(saleId);
+    }
+
     @GetMapping("/{saleId}/notification")
     public void notifySms(@PathVariable Long saleId) {
-        smsService.sendSms(saleId);
+        this.smsService.sendSms(saleId);
     }
 }

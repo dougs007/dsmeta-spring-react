@@ -1,28 +1,20 @@
-package com.devdouglas.dsmeta.entity;
+package com.devdouglas.dsmeta.dto;
 
-import javax.persistence.*;
+import com.devdouglas.dsmeta.entity.Sale;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "tb_sales")
-public class Sale {
+public class SaleDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long      id;
-    @Column(nullable = false)
-    private String    sellerName;
-    @Column(nullable = false)
-    private Integer   visited;
-    @Column(nullable = false)
-    private Integer   deals;
-    @Column(nullable = false)
-    private Double    amount;
+    private Long        id;
+    private String      sellerName;
+    private Integer     visited;
+    private Integer     deals;
+    private Double      amount;
+    private LocalDate   date;
 
-    @Column(nullable = false)
-    private LocalDate date;
-
-    public Sale() {
+    public SaleDTO() {
     }
 
     public Long getId() {
