@@ -1,7 +1,5 @@
 package com.devdouglas.dsmeta.dto;
 
-import com.devdouglas.dsmeta.entity.Sale;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 
