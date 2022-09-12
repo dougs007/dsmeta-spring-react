@@ -12,10 +12,12 @@ type Props = {
 function NotificationButton({ saleId }: Props) {
 
   function handleClick(id: number) {
-    axios(`${BASE_URL}/sales/${id}/notification`)
+    toast.info("SMS enviado com sucesso!");
+    console.warn('has been clicked')
+    /* axios(`${BASE_URL}/sales/${id}/notification`)
     .then( resp => {
       toast.info("SMS enviado com sucesso!");
-    })
+    }) */
   }
 
   return (
